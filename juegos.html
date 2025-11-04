@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario 3D Tendencias Digitales</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="shortcut icon" href="imagenes/Imagen_Tendencia.jpg" type="image/x-icon">
+    <style>
+        /* ======== Estilos generales ======== */
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #0e0e0e, #1a1a1a);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ======== Preloader ======== */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            border: 4px solid rgba(255,255,255,0.2);
+
+        /* ======== Opciones de respuesta ======== */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .option {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .option:hover { filter: brightness(1.2); }
+        .option.selected { outline: 2px solid #ffd54f; }
+        .option.correct { background: rgba(76,175,80,0.16); border-color: rgba(76,175,80,0.4); }
+        .option.incorrect { background: rgba(244,67,54,0.12); border-color: rgba(244,67,54,0.4); }
+        .feedback { margin-top: 8px; font-weight: 600; }
+        .feedback.correct { color: #5dd26a; }
+        .feedback.incorrect { color: #ff8a80; }
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 60px; height: 60px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {transform: rotate(0deg);}
+            100% {transform: rotate(360deg);}
+        }
+
+        /* ======== Contenido principal ======== */
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            padding-top: 80px;
+            text-align: center;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* ======== Carrusel 3D ======== */
+        .quiz-container {
+            perspective: 1200px;
+            width: 90%;
+            max-width: 700px;
+            margin: 60px auto;
+            position: relative;
+            height: 350px;
+        }
+
+        .quiz-item {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            opacity: 0;
+            transition: opacity 0.6s, transform 0.6s;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .quiz-item.active {
+            opacity: 1;
+            transform: rotateY(0deg) scale(1.02);
+        }
+
+        .quiz-item.next {
+            opacity: 0;
+            transform: rotateY(90deg) scale(0.9);
+        }
+
+        .quiz-item.prev {
+            opacity: 0;
+            transform: rotateY(-90deg) scale(0.9);
+        }
+
+        /* ======== Botones ======== */
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #00e0ff;
+        }
+
+        /* ======== Opciones ======== */
+        .options {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .option {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 6px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: rgba(0,224,255,0.3);
+        }
+
+        .correct {
+            background: rgba(0,255,0,0.3) !important;
+            border: 1px solid #00ff00;
+        }
+
+        .incorrect {
+            background: rgba(255,0,0,0.3) !important;
+            border: 1px solid #ff0000;
+        }
+
+        /* ======== Overlay de pregunta ======== */
+        .question-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .question-overlay.active { opacity: 1; pointer-events: auto; }
+        .question-card {
+            background: #0f1724;
+            color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 720px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            text-align: left;
+        }
+        .question-card h3 { margin-top: 0; }
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #fff;
+            cursor: pointer;
+            text-align: left;
+        }
+        .option-button.disabled { opacity: 0.6; pointer-events: none; }
+        .option-button.correct { background: rgba(34,197,94,0.14); border-color: rgba(34,197,94,0.6); }
+        .option-button.incorrect { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.6); }
+        .rationale { margin-top: 10px; font-weight: 600; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- ======== Pantalla de carga ======== -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loader"></div>
+    </div>
+
+    <!-- ======== Contenido principal ======== -->
+    <div id="main-content">
+        <h1>Cuestionario 3D - Tendencias Digitales</h1>
+
+        <div id="main-carousel" class="quiz-container">
+            <ul id="carousel-item-wrapper" class="carousel-list"></ul>
+        </div>
+
+        <!-- Overlay que muestra la pregunta seleccionada -->
+        <div id="question-overlay" class="question-overlay" aria-hidden="true">
+            <div class="question-card">
+                <h3 id="question-text">Pregunta</h3>
+                <div id="options-container" class="options"></div>
+                <div id="rationale-text" class="rationale"></div>
+                <div style="text-align:right; margin-top:12px;">
+                    <button id="next-question-btn" class="hidden">Siguiente</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="prev">Anterior</button>
+            <button id="next">Siguiente</button>
+        </div>
+   </div>
+
+    <nav class="menu">
+  <input type="radio" name="nav-item" id="m-home" checked>
+  <label for="m-home" onclick="window.location.href='index.html'">Inicio</label>
+
+  <input type="radio" name="nav-item" id="m-search">
+  <label for="m-search" onclick="window.location.href='buscar.html'">Tendencias</label>
+
+  <input type="radio" name="nav-item" id="m-notification">
+  <label for="m-notification" onclick="window.location.href='actividad.html'">Actividad</label>
+
+  <input type="radio" name="nav-item" id="m-favorites">
+  <label for="m-favorites" onclick="window.location.href='juegos.html'">Juegos</label>
+
+  <input type="radio" name="nav-item" id="m-profile">
+  <label for="m-profile" onclick="window.location.href='perfil.html'">Perfil</label>
+
+  <div class="selector"></div>
+</nav>
+
+        <script>
+            /* ======== Script de preguntas (basado en ejemplo del usuario) ======== */
+            const quizData = [
+    {
+        "question": "¿Qué es la 'IA Generativa'?",
+        "answerOptions": [
+            { "text": "IA que solo puede clasificar datos.", "isCorrect": false, "rationale": "Eso es IA de clasificación, un tipo más tradicional." },
+            { "text": "IA que puede crear contenido nuevo (texto, imágenes, música).", "isCorrect": true, "rationale": "Correcto. Modelos como GPT y DALL-E son ejemplos de IA Generativa." },
+            { "text": "Un tipo de antivirus avanzado.", "isCorrect": false, "rationale": "Aunque la IA se usa en antivirus, no es lo que define a la IA Generativa." },
+            { "text": "IA que controla robots en una fábrica.", "isCorrect": false, "rationale": "Eso es IA aplicada a la robótica, pero no necesariamente generativa." }
+        ]
+    },
+    {
+        "question": "¿A qué se refiere el 'Internet de las Cosas' (IoT)?",
+        "answerOptions": [
+            { "text": "A una red de internet ultrarrápida.", "isCorrect": false, "rationale": "Eso describiría más al 5G o la fibra óptica." },
+            { "text": "A la 'dark web' o internet profunda.", "isCorrect": false, "rationale": "El IoT opera en la internet pública y privada, no en la dark web." },
+            { "text": "A la red de dispositivos físicos (ej. sensores, electrodomésticos) conectados a internet.", "isCorrect": true, "rationale": "Correcto. IoT se refiere a objetos cotidianos que recopilan e intercambian datos." },
+            { "text": "A un sistema de almacenamiento en la nube.", "isCorrect": false, "rationale": "La nube se usa para almacenar datos de IoT, pero no es el IoT en sí." }
+        ]
+    },
+    {
+        "question": "¿Cuál es la principal ventaja del 5G sobre el 4G?",
+        "answerOptions": [
+            { "text": "Latencia mucho más baja y mayor velocidad.", "isCorrect": true, "rationale": "El 5G está diseñado para una latencia (tiempo de respuesta) casi instantánea." },
+            { "text": "Tiene mayor cobertura global en zonas rurales.", "isCorrect": false, "rationale": "La cobertura 4G sigue siendo más amplia; el 5G se está expandiendo." },
+            { "text": "Es significativamente más barato.", "isCorrect": false, "rationale": "El despliegue de infraestructura 5G es muy costoso." },
+            { "text": "Gasta menos batería en los móviles.", "isCorrect": false, "rationale": "Actualmente, las radios 5G pueden consumir más batería que las 4G." }
+        ]
+    },
+    {
+        "question": "¿Qué es el 'Metaverso'?",
+        "answerOptions": [
+            { "text": "Un nuevo videojuego de disparos.", "isCorrect": false, "rationale": "Los videojuegos son parte del Metaverso, pero no lo definen." },
+            { "text": "El sistema operativo de Apple para VR.", "isCorrect": false, "rationale": "Apple trabaja en visionOS, pero el Metaverso es un concepto más amplio." },
+            { "text": "Un universo virtual persistente e interconectado.", "isCorrect": true, "rationale": "Es un concepto de un espacio virtual colectivo y compartido." },
+            { "text": "Una red social solo para empresas.", "isCorrect": false, "rationale": "Aunque tendrá aplicaciones empresariales, es un concepto más amplio." }
+        ]
+    },
+    {
+        "question": "¿Qué tecnología es la base de las criptomonedas como Bitcoin?",
+        "answerOptions": [
+            { "text": "Inteligencia Artificial", "isCorrect": false, "rationale": "La IA no es la tecnología fundamental de Bitcoin." },
+            { "text": "Blockchain (Cadena de Bloques)", "isCorrect": true, "rationale": "Blockchain es el libro contable digital, distribuido e inmutable que registra las transacciones." },
+            { "text": "Computación en la Nube", "isCorrect": false, "rationale": "La nube puede alojar nodos, pero no es la tecnología base." },
+            { "text": "5G", "isCorrect": false, "rationale": "El 5G es una tecnología de red, no de base de datos." }
+        ]
+    },
+    {
+        "question": "¿Qué caracteriza al 'Big Data'?",
+        "answerOptions": [
+            { "text": "Las 3 'V': Volumen, Velocidad y Variedad.", "isCorrect": true, "rationale": "Estas son las tres características clásicas que definen al Big Data." },
+            { "text": "La velocidad de la conexión a internet.", "isCorrect": false, "rationale": "La velocidad de internet ayuda a mover Big Data, pero no lo define." },
+            { "text": "Un tipo de base de datos SQL.", "isCorrect": false, "rationale": "Big Data a menudo utiliza bases de datos NoSQL debido a su variedad." },
+            { "text": "Solo los archivos de más de 1 Terabyte.", "isCorrect": false, "rationale": "El volumen es una parte, pero también lo son la velocidad y la variedad." }
+        ]
+    },
+    {
+        "question": "¿Qué es 'Phishing' en ciberseguridad?",
+        "answerOptions": [
+            { "text": "Un virus que encripta archivos (Ransomware).", "isCorrect": false, "rationale": "Eso es Ransomware. El Phishing es el método de engaño." },
+            { "text": "Un intento de engañar a alguien para que revele información confidencial.", "isCorrect": true, "rationale": "Usa correos o mensajes fraudulentos para 'pescar' contraseñas o datos." },
+            { "text": "Un software de protección de red (Firewall).", "isCorrect": false, "rationale": "Un Firewall protege contra ataques, el phishing es un tipo de ataque." },
+            { "text": "Un error de hardware en un servidor.", "isCorrect": false, "rationale": "El Phishing es un ataque de ingeniería social, no un error de hardware." }
+        ]
+    },
+    {
+        "question": "Diferencia entre Realidad Aumentada (AR) y Realidad Virtual (VR):",
+        "answerOptions": [
+            { "text": "AR superpone información digital en el mundo real; VR te sumerge en un mundo digital.", "isCorrect": true, "rationale": "Correcto. AR (ej. Pokémon Go) 'aumenta' tu entorno; VR (ej. Oculus) lo 'reemplaza'." },
+            { "text": "AR te sumerge en un mundo 100% digital y VR no.", "isCorrect": false, "rationale": "Es al revés. VR te sumerge, AR superpone." },
+            { "text": "AR es solo para teléfonos y VR para consolas.", "isCorrect": false, "rationale": "Ambas tecnologías existen en múltiples plataformas." },
+            { "text": "No hay diferencia, son lo mismo.", "isCorrect": false, "rationale": "Son conceptos fundamentalmente diferentes." }
+        ]
+    },
+    {
+        "question": "¿Qué permiten las plataformas 'Low-Code' / 'No-Code'?",
+        "answerOptions": [
+            { "text": "Programar en un lenguaje de muy bajo nivel.", "isCorrect": false, "rationale": "Eso es programación de bajo nivel (ej. ensamblador), lo opuesto." },
+            { "text": "Hackear sistemas de forma sencilla.", "isCorrect": false, "rationale": "Son herramientas de desarrollo, no de hacking." },
+            { "text": "Crear aplicaciones con interfaces visuales y menos código.", "isCorrect": true, "rationale": "Su objetivo es acelerar y democratizar el desarrollo de software." },
+            { "text": "Diseñar solo páginas web estáticas.", "isCorrect": false, "rationale": "Permiten crear aplicaciones complejas con lógica y bases de datos." }
+        ]
+    },
+    {
+        "question": "¿Cuál es el principio del modelo 'Zero Trust' (Confianza Cero)?",
+        "answerOptions": [
+            { "text": "Confiar en todos los dispositivos dentro de la red.", "isCorrect": false, "rationale": "Eso es el modelo de 'castillo y foso' tradicional, que Zero Trust reemplaza." },
+            { "text": "Usar solo un antivirus muy potente.", "isCorrect": false, "rationale": "Zero Trust es una arquitectura de red, no un solo software." },
+            { "text": "Bloquear todo el tráfico de internet.", "isCorrect": false, "rationale": "Eso no sería funcional; Zero Trust permite tráfico verificado." },
+            { "text": "Nunca confiar, siempre verificar.", "isCorrect": true, "rationale": "Asume que cualquier dispositivo puede ser una amenaza y requiere verificación constante." }
+        ]
+    },
+    {
+        "question": "¿Qué es 'Edge Computing'?",
+        "answerOptions": [
+            { "text": "Procesar datos en un gran centro de datos (Cloud).", "isCorrect": false, "rationale": "Eso es Cloud Computing. Edge es lo opuesto." },
+            { "text": "Procesar datos más cerca de donde se generan (en el 'borde').", "isCorrect": true, "rationale": "Reduce la latencia al procesar datos localmente (ej. en una cámara o un coche)." },
+            { "text": "Un nuevo tipo de cable de red.", "isCorrect": false, "rationale": "Es un concepto de arquitectura de red, no un cable." },
+            { "text": "Una técnica de encriptación de datos.", "isCorrect": false, "rationale": "Es una estrategia de procesamiento, no de encriptación." }
+        ]
+    },
+    {
+        "question": "¿Qué es un NFT (Token No Fungible)?",
+        "answerOptions": [
+            { "text": "Una nueva criptomoneda como Bitcoin.", "isCorrect": false, "rationale": "Bitcoin es 'fungible' (uno vale lo mismo que otro). Los NFT son únicos." },
+            { "text": "Un tipo de archivo de imagen comprimido.", "isCorrect": false, "rationale": "Un NFT puede *apuntar* a una imagen, pero no es la imagen en sí." },
+            { "text": "Un certificado digital de propiedad sobre un activo digital único.", "isCorrect": true, "rationale": "Usa blockchain para certificar la propiedad de un ítem digital único." },
+            { "text": "Un software de seguridad para transacciones.", "isCorrect": false, "rationale": "Es un activo digital, no un software de seguridad." }
+        ]
+    },
+    {
+        "question": "¿Qué usan las computadoras cuánticas en lugar de bits?",
+        "answerOptions": [
+            { "text": "Megabits", "isCorrect": false, "rationale": "Un Megabit es solo una unidad de medida de bits (un millón)." },
+            { "text": "Qubits (Bits Cuánticos)", "isCorrect": true, "rationale": "Los Qubits pueden estar en 0, 1 o ambos a la vez (superposición)." },
+            { "text": "Neurobits", "isCorrect": false, "rationale": "Este término se relaciona con la computación neuromórfica, no cuántica." },
+            { "text": "Nanobots", "isCorrect": false, "rationale": "Los nanobots son robots microscópicos." }
+        ]
+    },
+    {
+        "question": "¿Qué significa 'SaaS' en Cloud Computing?",
+        "answerOptions": [
+            { "text": "Sistema de Almacenamiento y Seguridad.", "isCorrect": false, "rationale": "Es un acrónimo de términos en inglés." },
+            { "text": "Software como Servicio (Software as a Service).", "isCorrect": true, "rationale": "Es un modelo donde el software se aloja en la nube (ej. Gmail, Netflix)." },
+            { "text": "Servidor de Alta Sincronización.", "isCorrect": false, "rationale": "Acrónimo incorrecto." },
+            { "text": "Red de Area Segura.", "isCorrect": false, "rationale": "Acrónimo incorrecto." }
+        ]
+    },
+    {
+        "question": "¿Cuál es el objetivo de la 'Green Tech' (Tecnología Verde)?",
+        "answerOptions": [
+            { "text": "Hacer que los dispositivos sean más rápidos.", "isCorrect": false, "rationale": "La velocidad es un objetivo, pero no el de la Green Tech." },
+            { "text": "Vender productos de color verde.", "isCorrect": false, "rationale": "Es un concepto de sostenibilidad, no de estética." },
+            { "text": "Reducir el impacto ambiental de la tecnología.", "isCorrect": true, "rationale": "Busca la eficiencia energética y la reducción de la huella de carbono." },
+            { "text": "Crear inteligencia artificial.", "isCorrect": false, "rationale": "La IA puede ayudar a la Green Tech, pero no es su objetivo." }
+        ]
+    }
+];
+
+            let currentQuestionIndex = 0;
+            let isQuestionActive = false;
+
+            const carouselWrapper = document.getElementById('main-carousel');
+            const carouselItemsContainer = document.getElementById('carousel-item-wrapper');
+            const questionOverlay = document.getElementById('question-overlay');
+            const questionTextEl = document.getElementById('question-text');
+            const optionsContainerEl = document.getElementById('options-container');
+            const rationaleTextEl = document.getElementById('rationale-text');
+            const nextButton = document.getElementById('next-question-btn');
+            const mainContentEl = document.getElementById('main-content');
+            const loadingOverlayEl = document.getElementById('loading-overlay');
+
+            const numElements = quizData.length;
+
+            const createCarouselItems = () => {
+                quizData.forEach((q, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'quiz-item';
+                    li.innerHTML = `<h3>Pregunta ${index + 1}</h3><p>${q.question}</p>`; // Modificado para que sea más claro
+                    li.addEventListener('click', () => {
+                        // Solo permite abrir si es el item activo y no hay una pregunta abierta
+                        if (index === currentQuestionIndex && !isQuestionActive) {
+                            showQuestion(index);
+                        }
+                    });
+                    carouselItemsContainer.appendChild(li);
+                });
+            };
+
+            // *** FUNCIÓN AÑADIDA ***
+            // Actualiza las clases CSS del carrusel para mostrar el item activo
+            const updateCarousel = () => {
+                const items = document.querySelectorAll('.quiz-item');
+                items.forEach((item, i) => {
+                    item.classList.remove('active', 'prev', 'next');
+
+                    if (i === currentQuestionIndex) {
+                        item.classList.add('active');
+                    } else if (i === (currentQuestionIndex + 1) % numElements) {
+                        item.classList.add('next');
+                    } else if (i === (currentQuestionIndex - 1 + numElements) % numElements) {
+                        item.classList.add('prev');
+                    }
+                });
+
+                // Sincroniza el índice al hacer clic en el item (por si acaso)
+                const activeItem = items[currentQuestionIndex];
+                if (activeItem) {
+                    activeItem.onclick = () => {
+                        if (!isQuestionActive) showQuestion(currentQuestionIndex);
+                    };
+                }
+            };
+
+            const showQuestion = (index) => {
+                isQuestionActive = true;
+                currentQuestionIndex = index; // Asegura que el índice esté sincronizado
+
+                const currentQuestion = quizData[index];
+                questionTextEl.textContent = currentQuestion.question;
+                optionsContainerEl.innerHTML = '';
+                rationaleTextEl.textContent = '';
+                nextButton.classList.add('hidden');
+
+                currentQuestion.answerOptions.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-button';
+                    btn.type = 'button';
+                    btn.innerHTML = opt.text;
+                    btn.addEventListener('click', () => checkAnswer(opt, btn));
+                    optionsContainerEl.appendChild(btn);
+                });
+
+                questionOverlay.classList.add('active');
+            };
+
+            const checkAnswer = (selectedOption, selectedButton) => {
+                // desactivar todas las opciones
+                Array.from(optionsContainerEl.children).forEach(b => {
+                    b.classList.add('disabled');
+                });
+
+                // mostrar rationale
+                rationaleTextEl.textContent = selectedOption.rationale || '';
+
+                // marcar correct/incorrect
+                const allOptions = quizData[currentQuestionIndex].answerOptions;
+                Array.from(optionsContainerEl.children).forEach((button, idx) => {
+                    const opt = allOptions[idx];
+                    if (opt.isCorrect) button.classList.add('correct');
+                    else if (button === selectedButton) button.classList.add('incorrect');
+                });
+
+                nextButton.classList.remove('hidden');
+            };
+
+            const nextQuestion = () => {
+                isQuestionActive = false;
+                questionOverlay.classList.remove('active');
+
+                // *** LÍNEA AÑADIDA ***
+                // Mueve el carrusel de fondo a la siguiente pregunta
+                currentQuestionIndex = (currentQuestionIndex + 1) % numElements;
+                updateCarousel();
+
+                // Comprueba si hemos terminado
+                if (currentQuestionIndex === 0) { // Si dimos la vuelta
+                    // fin
+                    setTimeout(() => {
+                        carouselWrapper.style.display = 'none';
+                        document.getElementById('prev').style.display = 'none'; // Ocultar botones
+                        document.getElementById('next').style.display = 'none'; // Ocultar botones
+                        const subtitle = document.createElement('p');
+                        subtitle.textContent = '¡Has completado todas las preguntas! ¡Excelente trabajo!';
+                        subtitle.style.color = '#10b981';
+                        subtitle.style.fontSize = '1.2rem';
+                        mainContentEl.appendChild(subtitle);
+                    }, 300);
+                }
+            };
+
+            nextButton.addEventListener('click', nextQuestion);
+
+            // Inicializar al cargar
+            window.addEventListener('load', () => {
+                createCarouselItems();
+                
+                // *** LÍNEA AÑADIDA ***
+                // Muestra el primer item del carrusel (el de índice 0)
+                updateCarousel(); 
+
+                // ocultar overlay de carga si existe
+                if (loadingOverlayEl) {
+                    loadingOverlayEl.classList.add('hidden');
+                    setTimeout(() => {
+                        if (loadingOverlayEl.parentNode) loadingOverlayEl.parentNode.removeChild(loadingOverlayEl);
+                        mainContentEl.classList.add('visible');
+                    }, 300);
+                } else {
+                    mainContentEl.classList.add('visible');
+            }
+
+                // *** LÓGICA AÑADIDA PARA BOTONES DEL CARRUSEL ***
+                document.getElementById('next').addEventListener('click', () => {
+                    if (isQuestionActive) return; // No mover si la pregunta está abierta
+                    currentQuestionIndex = (currentQuestionIndex + 1) % numElements;
+                    updateCarousel();
+                });
+
+                document.getElementById('prev').addEventListener('click', () => {
+                    if (isQuestionActive) return; // No mover si la pregunta está abierta
+                    currentQuestionIndex = (currentQuestionIndex - 1 + numElements) % numElements;
+                    updateCarousel();
+                });
+            });
+        </script>
+<script src="script.js"></script>
+        </body>
+</html>

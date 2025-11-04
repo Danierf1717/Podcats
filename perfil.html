@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+     <link rel="shortcut icon" href="imagenes/Imagen_Tendencia.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style2.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="loader">
+    <div class="cat">
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+    </div>
+    </div>
+
+     <h1 class="page-title">Acerca de</h1>
+
+    <div class="content">
+        <div class="container">
+            <img src="imagenes/Yo xd.jpeg">
+            <div class="item-info">
+                <h2>Soy Daniel Ramirez</h2>
+                <p>Pagina creada para la informacion de las tendencias digitales manden dinero no sean culos cabrones</p>
+                <p class="email">Contáctame: enderezandofierros@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav class="menu">
+  <input type="radio" name="nav-item" id="m-home" checked>
+  <label for="m-home" onclick="window.location.href='Principal.html'">Inicio</label>
+
+  <input type="radio" name="nav-item" id="m-search">
+  <label for="m-search" onclick="window.location.href='buscar.html'">Tendencias</label>
+
+  <input type="radio" name="nav-item" id="m-notification">
+  <label for="m-notification" onclick="window.location.href='actividad.html'">Actividad</label>
+
+  <input type="radio" name="nav-item" id="m-favorites">
+  <label for="m-favorites" onclick="window.location.href='juegos.html'">Juegos</label>
+
+  <input type="radio" name="nav-item" id="m-profile">
+  <label for="m-profile" onclick="window.location.href='perfil.html'">Perfil</label>
+
+  <div class="selector"></div>
+</nav>
+    <footer>
+<div class="social">
+    <a href="https://www.facebook.com/profile.php?id=100037639095912" target="_blank">
+        <i class='bx bxl-facebook-square'></i>
+    </a>
+    <a href="https://www.instagram.com/TU_USUARIO" target="_blank">
+        <i class='bx bxl-instagram'></i>
+    </a>
+    <a href="https://twitter.com/TU_USUARIO" target="_blank">
+        <i class='bx bxl-twitter'></i>
+    </a>
+    <a href="https://www.linkedin.com/in/TU_PERFIL" target="_blank">
+        <i class='bx bxl-linkedin-square'></i>
+    </a>
+    </div>
+    <p>Daniel Ramirez Flores ©2025, Todos los derechos reservados.</p>
+</footer>
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll(".section");
+        
+            const revealOnScroll = () => {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    if (sectionTop < window.innerHeight * 0.85) {
+                        section.classList.add("visible");
+                    }
+                });
+            };
+        
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll();
+        });
+
+        
+        
+            </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

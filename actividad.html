@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Tendencias Digitales</title> <link rel="stylesheet" href="style2.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="imagenes/Imagen_Tendencia.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style2.css">
+    <style>
+        /* ======== ESTILOS BÁSICOS DE LA GUÍA ======== */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111; /* Fondo oscuro base */
+            color: #eee;
+            line-height: 1.6;
+            padding-bottom: 100px; /* Para que el footer no tape el contenido */
+        }
+
+        .page-title {
+            text-align: center;
+            color: #00e0ff; /* Color de acento */
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .guide-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .guide-section {
+            background-color: #25252a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            padding: 20px;
+            
+            /* Para la animación de scroll */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        /* Clase que añade el JS para la animación */
+        .guide-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .guide-section h2 {
+            color: #00e0ff;
+            border-bottom: 2px solid #00e0ff;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .guide-section p {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .guide-section ul {
+            padding-left: 20px;
+            color: #ccc;
+        }
+
+        .guide-section li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        /* Estilos del Loader (asumo que están en style2.css, pero los pongo aquí por si acaso) */
+        #loader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #111;
+          z-index: 9999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        /* ... (Aquí irían los estilos de .cat que ya tenías) ... */
+
+    </style>
+</head>
+<body>
+    <div id="loader">
+    <div class="cat">
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+      <div class="cat__segment"></div>
+    </div>
+    </div>
+    
+    <h1 class="page-title">Guía de Tendencias Digitales</h1>
+
+    <div class="guide-container">
+
+        <div class="guide-section">
+            <h2>1. IA Generativa</h2>
+            <p>La <strong>Inteligencia Artificial Generativa</strong> es un tipo de IA que no solo analiza datos, sino que puede <strong>crear contenido completamente nuevo</strong> y original. Este contenido puede ser texto, imágenes, música, código o incluso videos.</p>
+            <p>Funciona aprendiendo de enormes cantidades de datos (por ejemplo, todo el texto de internet o millones de imágenes) y luego "entiende" los patrones para generar nuevas salidas. Modelos como GPT (para texto) o DALL-E (para imágenes) son ejemplos perfectos.</p>
+            <p><strong>No es:</strong> Una IA de clasificación (que solo dice "esto es un gato" o "esto es spam") ni un simple robot de fábrica (que sigue instrucciones programadas).</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>2. Internet de las Cosas (IoT)</h2>
+            <p>El <strong>Internet de las Cosas (IoT)</strong> se refiere a la red de <strong>dispositivos físicos cotidianos</strong> (como electrodomésticos, sensores, coches, relojes) que están equipados con sensores y software para <strong>conectarse a internet y intercambiar datos</strong>.</p>
+            <p>El objetivo es que estos objetos sean "inteligentes" y puedan ser monitoreados o controlados de forma remota. Un "smartwatch" que mide tu pulso y lo envía a tu teléfono es IoT. Una nevera que te avisa que se acabó la leche es IoT.</p>
+            <p><strong>No es:</strong> La nube (que es donde se almacenan los datos) ni el 5G (que es la red que *permite* que se conecten rápido).</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>3. Red 5G</h2>
+            <p>El <strong>5G</strong> es la quinta generación de tecnología de redes móviles. Sus dos ventajas principales sobre el 4G son:</p>
+            <ul>
+                <li><strong>Velocidad:</strong> Es muchísimo más rápida, permitiendo descargas casi instantáneas.</li>
+                <li><strong>Latencia ultra baja:</strong> La latencia es el tiempo de respuesta. El 5G la reduce a casi cero, lo cual es vital para coches autónomos, cirugía remota o gaming competitivo en la nube.</li>
+            </ul>
+            <p><strong>No es:</strong> Más barata (su despliegue es caro) ni tiene más cobertura (el 4G sigue llegando a más sitios, por ahora).</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>4. Metaverso</h2>
+            <p>El <strong>Metaverso</strong> es un concepto de un <strong>universo virtual, persistente e interconectado</strong>. Es una visión futura de internet como un espacio 3D colectivo donde los usuarios, a través de avatares, pueden interactuar entre sí y con el entorno.</p>
+            <p>Imagina un mundo virtual donde puedes trabajar, socializar, ir a conciertos o comprar, y todo está conectado. Plataformas como Fortnite o Roblox son consideradas "proto-metaversos", pero la visión completa es mucho más grande e integrada.</p>
+            <p><strong>No es:</strong> Un solo videojuego o una red social específica, sino el conjunto de todos esos espacios interconectados.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>5. Blockchain (Base de Criptomonedas)</h2>
+            <p>La <strong>Blockchain</strong> o <strong>Cadena de Bloques</strong> es la tecnología fundamental detrás de las criptomonedas como Bitcoin. Es, en esencia, un <strong>libro contable digital que es público, distribuido e inmutable</strong>.</p>
+            <ul>
+                <li><strong>Distribuido:</strong> Miles de copias existen en miles de computadoras. No hay un dueño central.</li>
+                <li><strong>Inmutable:</strong> Una vez que se registra una transacción (un "bloque"), no se puede modificar ni borrar.</li>
+            </ul>
+            <p>Esta estructura la hace extremadamente segura y transparente, eliminando la necesidad de un intermediario (como un banco) para verificar transacciones.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>6. Big Data</h2>
+            <p>El <strong>Big Data</strong> describe conjuntos de datos tan masivos y complejos que las herramientas tradicionales de procesamiento de datos no pueden manejarlos. Se define clásicamente por las <strong>3 'V'</strong>:</p>
+            <ul>
+                <li><strong>Volumen:</strong> Cantidades enormes de datos (terabytes, petabytes).</li>
+                <li><strong>Velocidad:</strong> Los datos se generan y deben procesarse a una velocidad muy alta (ej. tuits por segundo, transacciones).</li>
+                <li><strong>Variedad:</strong> Los datos vienen en muchos formatos diferentes (texto, imágenes, videos, datos de sensores, etc.).</li>
+            </ul>
+        </div>
+
+        <div class="guide-section">
+            <h2>7. Phishing</h2>
+            <p>El <strong>Phishing</strong> es un ataque de ciberseguridad que usa la <strong>ingeniería social</strong> (engaño) para robar información confidencial del usuario. El atacante se hace pasar por una entidad de confianza (como un banco, Netflix, o tu trabajo) y envía un correo, SMS o mensaje fraudulento.</p>
+            <p>El objetivo es que la víctima haga clic en un enlace malicioso o ingrese sus credenciales (usuario y contraseña) en una página web falsa que luce idéntica a la real. Su nombre viene de "pescar" (fishing) usuarios.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>8. Realidad Aumentada (AR) vs. Realidad Virtual (VR)</h2>
+            <p>Aunque suenan parecido, son muy diferentes:</p>
+            <ul>
+                <li><strong>Realidad Virtual (VR):</strong> Te <strong>sumerge por completo</strong> en un mundo 100% digital. Reemplaza tu visión del mundo real. Necesitas un visor (como el Oculus/Meta Quest) que te aísla del exterior.</li>
+                <li><strong>Realidad Aumentada (AR):</strong> <strong>Superpone información digital</strong> (imágenes, texto, objetos 3D) sobre tu visión del mundo real. "Aumenta" la realidad. El ejemplo más famoso es Pokémon Go, o los filtros de Instagram/Snapchat.</li>
+            </ul>
+        </div>
+
+        <div class="guide-section">
+            <h2>9. Low-Code / No-Code</h2>
+            <p>Las plataformas <strong>Low-Code (Poco Código)</strong> y <strong>No-Code (Sin Código)</strong> son herramientas de desarrollo que permiten a los usuarios crear aplicaciones (web, móviles, de negocio) usando <strong>interfaces gráficas visuales</strong> (como arrastrar y soltar bloques) en lugar de escribir código tradicional.</p>
+            <p>El objetivo es "democratizar" el desarrollo, permitiendo que personas sin un fondo técnico profundo puedan construir y automatizar procesos rápidamente.</p>
+            <p><strong>No es:</strong> Programación de bajo nivel (que es lo opuesto, como Ensamblador) ni herramientas de hacking.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>10. Zero Trust (Confianza Cero)</h2>
+            <p><strong>Zero Trust</strong> es un modelo o arquitectura de ciberseguridad. Su principio fundamental es: <strong>"Nunca confiar, siempre verificar"</strong>.</p>
+            <p>El modelo tradicional de seguridad era como un castillo: si estabas "dentro" de la red (en la oficina), se confiaba en ti. Zero Trust asume que las amenazas pueden estar tanto dentro como fuera. Por lo tanto, cada usuario, dispositivo y conexión debe ser verificado y autenticado constantemente antes de darle acceso a cualquier recurso, sin importar dónde esté.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>11. Edge Computing</h2>
+            <p><strong>Edge Computing</strong> (Computación en el Borde) es una estrategia de arquitectura de red. En lugar de enviar todos los datos a un gran centro de datos en la nube (Cloud Computing) para ser procesados, el Edge Computing busca <strong>procesar esos datos lo más cerca posible de donde se generan</strong>.</p>
+            <p>Por ejemplo, un coche autónomo no puede esperar a enviar datos a la nube para decidir si frenar. Necesita procesar los datos de sus sensores "en el borde" (en el propio coche) para tener una respuesta instantánea. Esto reduce la latencia.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>12. NFT (Token No Fungible)</h2>
+            <p>Un <strong>NFT (Token No Fungible)</strong> es un <strong>certificado digital de propiedad sobre un activo digital único</strong>. Utiliza la tecnología Blockchain para registrar quién es el dueño de algo.</p>
+            <p>La clave es "No Fungible". Un billete de $100 es *fungible* (puedes cambiarlo por cualquier otro billete de $100). La pintura de la Mona Lisa es *no fungible* (es única). Un NFT es como el registro de propiedad de la Mona Lisa, pero para un archivo digital (como un .jpg, .mp3, etc.).</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>13. Computación Cuántica</h2>
+            <p>La computación clásica (tu laptop, tu teléfono) usa <strong>"bits"</strong>. Un bit solo puede tener dos estados: <strong>0 o 1</strong>.</p>
+            <p>La <strong>Computación Cuántica</strong> usa <strong>"Qubits" (Bits Cuánticos)</strong>. Gracias a un principio llamado "superposición cuántica", un Qubit puede ser <strong>0, 1, o ambos al mismo tiempo</strong>. Esto les permite realizar cálculos increíblemente complejos a una velocidad que es imposible para las computadoras clásicas, especialmente en áreas como la criptografía o el descubrimiento de medicinas.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>14. SaaS (Software as a Service)</h2>
+            <p><strong>SaaS</strong> significa <strong>Software como Servicio</strong> (Software as a Service). Es un modelo de distribución de software dentro del Cloud Computing.</p>
+            <p>En lugar de comprar un software, instalarlo en tu PC y ser dueño de esa copia (como el antiguo Office en CD), con SaaS tú <strong>te suscribes al software</strong> (generalmente con un pago mensual) y accedes a él a través de internet (un navegador web o una app). El software vive en la nube, no en tu máquina.</p>
+            <p>Ejemplos perfectos son <strong>Netflix, Gmail, Spotify, o Google Docs</strong>.</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>15. Green Tech (Tecnología Verde)</h2>
+            <p>La <strong>Green Tech</strong> o <strong>Tecnología Sostenible</strong> no es una sola tecnología, sino un enfoque que utiliza la tecnología para <strong>reducir el impacto ambiental humano</strong> y promover la sostenibilidad.</p>
+            <p>Su objetivo es crear productos y servicios que sean energéticamente eficientes, reduzcan la huella de carbono, minimicen los residuos o ayuden a gestionar mejor los recursos naturales. Esto incluye desde paneles solares y coches eléctricos hasta centros de datos más eficientes e IA que optimiza el consumo de energía.</p>
+        </div>
+
+    </div> <nav class="menu">
+      <input type="radio" name="nav-item" id="m-home" checked>
+      <label for="m-home" onclick="window.location.href='Principal.html'">Inicio</label>
+    
+      <input type="radio" name="nav-item" id="m-search">
+      <label for="m-search" onclick="window.location.href='buscar.html'">Tendencias</label>
+    
+      <input type="radio" name="nav-item" id="m-notification">
+      <label for="m-notification" onclick="window.location.href='actividad.html'">Actividad</label>
+    
+      <input type="radio" name="nav-item" id="m-favorites">
+      <label for="m-favorites" onclick="window.location.href='juegos.html'">Juegos</label>
+    
+      <input type="radio" name="nav-item" id="m-profile">
+      <label for="m-profile" onclick="window.location.href='perfil.html'">Perfil</label>
+    
+      <div class="selector"></div>
+    </nav>
+    
+    <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/profile.php?id=100037639095912" target="_blank">
+          <i class='bx bxl-facebook-square'></i>
+      </a>
+      <a href="https://www.instagram.com/TU_USUARIO" target="_blank">
+          <i class='bx bxl-instagram'></i>
+      </a>
+      <a href="https://twitter.com/TU_USUARIO" target="_blank">
+          <i class='bx bxl-twitter'></i>
+      </a>
+      <a href="https://www.linkedin.com/in/TU_PERFIL" target="_blank">
+          <i class='bx bxl-linkedin-square'></i>
+      </a>
+      </div>
+      <p>Enderezando Fierros ©2025, Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Actualizado para apuntar a la nueva clase '.guide-section'
+            const sections = document.querySelectorAll(".guide-section");
+        
+            const revealOnScroll = () => {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    if (sectionTop < window.innerHeight * 0.85) {
+                        section.classList.add("visible");
+                    }
+                });
+            };
+        
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll(); // Llama una vez al cargar
+        });
+        
+        // Simulación de carga (puedes borrar esto si tu loader funciona de otra forma)
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            if(loader) {
+                setTimeout(() => {
+                    loader.style.display = "none";
+                }, 1000); // Esconde el loader después de 1 segundo
+            }
+        });
+            
+    </script>
+    <script src="script.js"></script>
+    </body>
+</html>

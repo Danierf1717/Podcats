@@ -1,0 +1,541 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+* {
+  margin: 10;
+  padding-right: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #151515;
+  --clr: #005cbf;
+}
+
+.card {
+  position: relative;
+  width: 300px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+
+.card:hover {
+  width: 600px;
+  transition-delay: 0.5s;
+}
+
+.card .circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card .circle::before {
+  content: "";
+  position: absolute;
+  top: 30;
+  left: 2;
+  right: 2;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: #191919;
+  border: 8px solid var(--clr);
+  transition: 0.5s, background 0.5s;
+  transition-delay: 0.75s, 1s;
+  filter: drop-shadow(0 0 10px var(--clr)) drop-shadow(0 0 60px var(--clr));
+}
+
+.card:hover .circle::before {
+  transition-delay: 0.5s;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: var(--clr);
+}
+
+.card .circle .logo {
+  position: relative;
+  width: 250px;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+
+.card:hover .circle .logo {
+  transform: scale(0);
+  transition-delay: 0s;
+}
+.card .product_img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6) rotate(-5deg); /* Hacemos que sea visible desde el inicio, más pequeña y ligeramente rotada */
+  height: 250px; /* Tamaño inicial más pequeño */
+  border-radius: 20px; /* Bordes redondeados para un toque aesthetic */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra sutil para un efecto de profundidad */
+  transition: 0.8s ease-in-out; /* Ajustamos la duración de la transición si lo deseas */
+  object-fit: cover; /* Asegura que la imagen se ajuste bien sin distorsionarse */
+}
+
+.card:hover .product_img {
+  transition-delay: 0.3s; /* Puedes ajustar este retraso */
+  top: 25%; /* Ajusta la posición final al hacer hover */
+  left: 75%; /* Ajusta la posición final al hacer hover */
+  height: 530px; /* Tamaño más grande al hacer hover (puedes ajustar si 530px es demasiado grande para tu nuevo diseño) */
+  transform: translate(-50%, -50%) scale(1) rotate(15deg); /* Vuelve al tamaño original y rota */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al hacer hover */
+}
+
+.card .content {
+  position: absolute;
+  width: 50%;
+  left: 20%;
+  padding: 20px 20px 20px 20px;
+  opacity: 0;
+  transition: 0.5s;
+  visibility: hidden;
+}
+
+.card:hover .content {
+  transition-delay: 0.75s;
+  opacity: 1;
+  visibility: visible;
+  left: 20px;
+}
+
+.card .content h2 {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 2.5em;
+  line-height: 1em;
+}
+
+.card .content p {
+  color: #fff;
+}
+
+.card .content a {
+  position: relative;
+  color: #fff;
+  background: #d52b1e;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 10px;
+}
+/* =================================== */
+/* ===   CÓDIGO RESPONSIVE AÑADIDO  === */
+/* =================================== */
+
+@media (max-width: 800px) {
+
+  body {
+    /* Añadimos padding para que la tarjeta no pegue a los bordes */
+    padding: 20px; 
+  }
+
+  /* 1. Hacemos que la tarjeta sea vertical y ocupe el ancho */
+  .card {
+    width: 90vw; /* 90% del ancho de la pantalla */
+    max-width: 380px; /* Un ancho máximo para tablets */
+    height: auto; /* Altura automática para que quepa el contenido */
+    transition-delay: 0s; /* Quitamos la animación de espera */
+  }
+
+  /* 2. Desactivamos la animación de expansión al "hover" */
+  .card:hover {
+    width: 90vw; /* Mantenemos el mismo ancho */
+    max-width: 380px;
+    transition-delay: 0s;
+  }
+
+  /* 3. Mostramos el fondo de color por defecto (como en el hover) */
+  .card .circle::before {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: var(--clr);
+    transition: none; /* Sin animación */
+    filter: none; /* Quitamos los filtros */
+    /* Reseteamos la posición que tenía */
+    top: 0;
+    left: 0;
+    right: 0;
+    border: none; 
+  }
+
+  /* 4. Ocultamos el logo por defecto (como en el hover) */
+  .card .circle .logo {
+    transform: scale(0);
+    transition: none;
+    transition-delay: 0s;
+  }
+  
+  /* 5. Desactivamos retrasos de animación que ya no aplican */
+  .card:hover .circle .logo,
+  .card:hover .circle::before {
+    transition-delay: 0s;
+  }
+
+  /* 6. Reposicionamos la imagen: ahora va arriba y estática */
+  .card .product_img {
+    position: relative; /* La volvemos parte del flujo normal */
+    top: -80px; /* La subimos para que "flote" sobre la tarjeta */
+    left: 50%; /* La centramos */
+    transform: translateX(-50%) rotate(15deg); /* Centramos y rotamos */
+    height: 300px; /* Un buen tamaño para móvil */
+    transition: none; /* Quitamos la animación */
+  }
+
+  /* 7. Desactivamos la animación "hover" de la imagen */
+  .card:hover .product_img {
+    /* Sobreescribimos el hover para que no haga nada */
+    position: relative;
+    top: -80px;
+    left: 50%;
+    height: 300px;
+    transform: translateX(-50%) rotate(15deg);
+    transition: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Mantenemos la sombra */
+  }
+
+  /* 8. Mostramos el contenido por defecto, debajo de la imagen */
+  .card .content {
+    position: relative; /* Lo volvemos parte del flujo */
+    opacity: 1; /* Visible por defecto */
+    visibility: visible;
+    width: 90%; /* Que ocupe casi todo el ancho de la tarjeta */
+    left: 0; /* Reseteamos la posición */
+    margin: 0 auto; /* Centramos el bloque */
+    margin-top: -80px; /* Lo subimos para que quede más pegado a la imagen */
+    padding: 0px 20px 30px 20px; /* Padding para que respire */
+    text-align: center; /* Centramos el texto */
+    transition: none; /* Sin animación */
+    transition-delay: 0s;
+  }
+
+  /* 9. Desactivamos la animación "hover" del contenido */
+  .card:hover .content {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    transition-delay: 0s;
+  }
+
+  /* 10. Ajustamos el tamaño del título para que quepa */
+  .card .content h2 {
+    font-size: 2em; /* Un poco más pequeño que en PC */
+  }
+}
+#loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #2c4763;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Ocultamos el contenido hasta que termine el loader */
+    #content {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    #content.visible {
+      opacity: 1;
+    }
+    * {
+  border: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.cat {
+  margin: auto;
+  position: relative;
+  width: 16em;
+  height: 16em;
+}
+.cat__segment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3em;
+  height: 2em;
+  transform: translate(-50%, -50%);
+}
+.cat__segment:before {
+  animation: loop 2s cubic-bezier(0.6, 0, 0.4, 1) infinite running;
+  background: linear-gradient(90deg, white 20%, #e6e6e6 20% 80%, white 80%);
+  border-radius: 0.25em;
+  content: "";
+  display: block;
+  will-change: transform;
+  width: 100%;
+  height: 100%;
+}
+.cat__segment:first-of-type {
+  width: 4em;
+  height: 4em;
+  z-index: 1;
+}
+.cat__segment:first-of-type:before {
+  background: radial-gradient(0.25em 0.25em at 1.25em 1.6em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(0.75em 0.75em at 1.25em 1.75em, #1a1a1a 48%, rgba(26, 26, 26, 0) 50%), radial-gradient(0.25em 0.25em at 2.75em 1.6em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(0.75em 0.75em at 2.75em 1.75em, #1a1a1a 48%, rgba(26, 26, 26, 0) 50%), radial-gradient(0.9em 0.8em at 1.5em 2.65em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(0.9em 0.8em at 2.5em 2.65em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(1em 0.8em at 1.6em 2.75em, #cccccc 48%, rgba(204, 204, 204, 0) 50%), radial-gradient(1em 0.8em at 2.4em 2.75em, #cccccc 48%, rgba(204, 204, 204, 0) 50%), radial-gradient(0.75em 0.75em at 50% 2.5em, #e69999 48%, rgba(230, 153, 153, 0) 50%), radial-gradient(4em 3em at 50% 2em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(4em 3em at 50% 2.2em, #cccccc 48%, rgba(204, 204, 204, 0) 50%), radial-gradient(1em 3em at 0.75em 1.5em, #e69999 39%, white 40% 49%, rgba(255, 255, 255, 0) 50%), radial-gradient(1em 3em at 3.25em 1.5em, #e69999 39%, white 40% 49%, rgba(255, 255, 255, 0) 50%), radial-gradient(1em 2em at 0.5em 2.8em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(1em 2em at 0.5em 3em, #cccccc 48%, rgba(204, 204, 204, 0) 50%), radial-gradient(1em 2em at 3.5em 2.8em, white 48%, rgba(255, 255, 255, 0) 50%), radial-gradient(1em 2em at 3.5em 3em, #cccccc 48%, rgba(204, 204, 204, 0) 50%);
+  background-repeat: no-repeat;
+}
+.cat__segment:last-of-type {
+  width: 3em;
+  height: 4em;
+}
+.cat__segment:last-of-type:before {
+  background: linear-gradient(90deg, white 20%, #e6e6e6 20% 80%, white 80%) 0 1.5em/3em 0.5em, radial-gradient(3em 2em at top center, #e6e6e6 30%, white 31% 48%, rgba(255, 255, 255, 0) 50%) 0 2em/3em 2em, radial-gradient(1em 4em at 0.5em 0, white 48%, rgba(255, 255, 255, 0) 50%) 0 2em/3em 2em, radial-gradient(1em 4em at 2.5em 0, white 48%, rgba(255, 255, 255, 0) 50%) 0 2em/3em 2em;
+  background-repeat: no-repeat;
+}
+.cat__segment:nth-of-type(1) {
+  transform: translate(-50%, -50%) rotate(-20deg);
+}
+.cat__segment:nth-of-type(1):before {
+  animation-delay: 0s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(2) {
+  transform: translate(-50%, -50%) rotate(-18.6666666667deg);
+}
+.cat__segment:nth-of-type(2):before {
+  animation-delay: 0.02s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(3) {
+  transform: translate(-50%, -50%) rotate(-17.3333333333deg);
+}
+.cat__segment:nth-of-type(3):before {
+  animation-delay: 0.04s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(4) {
+  transform: translate(-50%, -50%) rotate(-16deg);
+}
+.cat__segment:nth-of-type(4):before {
+  animation-delay: 0.06s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(5) {
+  transform: translate(-50%, -50%) rotate(-14.6666666667deg);
+}
+.cat__segment:nth-of-type(5):before {
+  animation-delay: 0.08s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(6) {
+  transform: translate(-50%, -50%) rotate(-13.3333333333deg);
+}
+.cat__segment:nth-of-type(6):before {
+  animation-delay: 0.1s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(7) {
+  transform: translate(-50%, -50%) rotate(-12deg);
+}
+.cat__segment:nth-of-type(7):before {
+  animation-delay: 0.12s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(8) {
+  transform: translate(-50%, -50%) rotate(-10.6666666667deg);
+}
+.cat__segment:nth-of-type(8):before {
+  animation-delay: 0.14s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(9) {
+  transform: translate(-50%, -50%) rotate(-9.3333333333deg);
+}
+.cat__segment:nth-of-type(9):before {
+  animation-delay: 0.16s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(10) {
+  transform: translate(-50%, -50%) rotate(-8deg);
+}
+.cat__segment:nth-of-type(10):before {
+  animation-delay: 0.18s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(11) {
+  transform: translate(-50%, -50%) rotate(-6.6666666667deg);
+}
+.cat__segment:nth-of-type(11):before {
+  animation-delay: 0.2s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(12) {
+  transform: translate(-50%, -50%) rotate(-5.3333333333deg);
+}
+.cat__segment:nth-of-type(12):before {
+  animation-delay: 0.22s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(13) {
+  transform: translate(-50%, -50%) rotate(-4deg);
+}
+.cat__segment:nth-of-type(13):before {
+  animation-delay: 0.24s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(14) {
+  transform: translate(-50%, -50%) rotate(-2.6666666667deg);
+}
+.cat__segment:nth-of-type(14):before {
+  animation-delay: 0.26s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(15) {
+  transform: translate(-50%, -50%) rotate(-1.3333333333deg);
+}
+.cat__segment:nth-of-type(15):before {
+  animation-delay: 0.28s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(16) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+.cat__segment:nth-of-type(16):before {
+  animation-delay: 0.3s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(17) {
+  transform: translate(-50%, -50%) rotate(1.3333333333deg);
+}
+.cat__segment:nth-of-type(17):before {
+  animation-delay: 0.32s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(18) {
+  transform: translate(-50%, -50%) rotate(2.6666666667deg);
+}
+.cat__segment:nth-of-type(18):before {
+  animation-delay: 0.34s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(19) {
+  transform: translate(-50%, -50%) rotate(4deg);
+}
+.cat__segment:nth-of-type(19):before {
+  animation-delay: 0.36s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(20) {
+  transform: translate(-50%, -50%) rotate(5.3333333333deg);
+}
+.cat__segment:nth-of-type(20):before {
+  animation-delay: 0.38s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(21) {
+  transform: translate(-50%, -50%) rotate(6.6666666667deg);
+}
+.cat__segment:nth-of-type(21):before {
+  animation-delay: 0.4s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(22) {
+  transform: translate(-50%, -50%) rotate(8deg);
+}
+.cat__segment:nth-of-type(22):before {
+  animation-delay: 0.42s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(23) {
+  transform: translate(-50%, -50%) rotate(9.3333333333deg);
+}
+.cat__segment:nth-of-type(23):before {
+  animation-delay: 0.44s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(24) {
+  transform: translate(-50%, -50%) rotate(10.6666666667deg);
+}
+.cat__segment:nth-of-type(24):before {
+  animation-delay: 0.46s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(25) {
+  transform: translate(-50%, -50%) rotate(12deg);
+}
+.cat__segment:nth-of-type(25):before {
+  animation-delay: 0.48s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(26) {
+  transform: translate(-50%, -50%) rotate(13.3333333333deg);
+}
+.cat__segment:nth-of-type(26):before {
+  animation-delay: 0.5s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(27) {
+  transform: translate(-50%, -50%) rotate(14.6666666667deg);
+}
+.cat__segment:nth-of-type(27):before {
+  animation-delay: 0.52s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(28) {
+  transform: translate(-50%, -50%) rotate(16deg);
+}
+.cat__segment:nth-of-type(28):before {
+  animation-delay: 0.54s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(29) {
+  transform: translate(-50%, -50%) rotate(17.3333333333deg);
+}
+.cat__segment:nth-of-type(29):before {
+  animation-delay: 0.56s;
+  transform: translateX(6em);
+}
+.cat__segment:nth-of-type(30) {
+  transform: translate(-50%, -50%) rotate(18.6666666667deg);
+}
+.cat__segment:nth-of-type(30):before {
+  animation-delay: 0.58s;
+  transform: translateX(6em);
+}
+
+@keyframes loop {
+  from {
+    transform: rotate(0) translateX(6em);
+  }
+  to {
+    transform: rotate(-1turn) translateX(6em);
+  }
+}
